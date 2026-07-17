@@ -2,7 +2,8 @@ import os
 import json
 import joblib
 import pandas as pd
-
+import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.metrics import (
     mean_absolute_error,
     mean_squared_error,
@@ -51,9 +52,101 @@ class ModelEvaluation:
         with open("reports/metrics.json", "w") as f:
             json.dump(metrics, f, indent=4)
 
+        # -----------------------
+        # Plot 1: Actual vs Predicted
+        # -----------------------
+        plt.figure(figsize=(8,6))
+        plt.scatter(y_test, y_pred, alpha=0.6)
+        plt.xlabel("Actual Price")
+        plt.ylabel("Predicted Price")
+        plt.title("Actual vs Predicted House Prices")
+        plt.savefig("reports/actual_vs_predicted.png")
+        plt.close()
+
+         # -----------------------------
+        # Residual Plot
+        # -----------------------------
+        residuals = y_test - y_pred
+        plt.figure(figsize=(8, 6))
+        plt.scatter(y_pred, residuals, alpha=0.6)
+        plt.axhline(y=0, color='red', linestyle='--')
+        plt.xlabel("Predicted Price")
+        plt.ylabel("Residuals")
+        plt.title("Residual Plot")
+        plt.savefig("reports/residual_plot.png")
+        plt.show()
+
+        # -----------------------------
+        # Residual Distribution Plot
+        # -----------------------------    
+
+        try:
+
+            plt.figure(figsize=(8, 6))
+
+            sns.histplot(
+                residuals,
+                bins=30,
+                kde=True
+            )
+
+            plt.xlabel("Residual")
+            plt.title("Residual Distribution")
+            plt.tight_layout()
+            plt.savefig("reports/residual_distribution.png")
+            plt.close()
+
+            print("✓ residual_distribution.png saved")
+
+        except Exception as e:
+            print("Residual Distribution Error:", e)
+
+        # -----------------------------
+        # Feature Importance Plot
+        # -----------------------------     
+
+        if hasattr(model, "feature_importances_"):
+
+           try:
+
+               importance = pd.DataFrame({
+               "Feature": X_test.columns,
+               "Importance": model.feature_importances_
+               })
+
+               importance = importance.sort_values(
+               by="Importance",
+               ascending=False
+               )
+
+               plt.figure(figsize=(10, 6))
+
+               sns.barplot(
+                data=importance,
+                x="Importance",
+                y="Feature"
+                )
+
+               plt.title("Feature Importance")
+
+               plt.tight_layout()
+
+               plt.savefig("reports/feature_importance.png")
+               plt.close()
+
+               print("✓ feature_importance.png saved")
+
+           except Exception as e:
+            print("Feature Importance Error:", e)
+
+        else:
+            print("Current model does not support feature_importances_")
+
+        print("\nEvaluation Completed Successfully")
+
         print("Metrics saved to reports/metrics.json")
 
 
 if __name__ == "__main__":
     evaluator = ModelEvaluation()
-    evaluator.evaluate_model()
+    evaluator.evaluate_model()  
