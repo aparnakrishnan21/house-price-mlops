@@ -13,7 +13,7 @@ class DataPreprocessing:
         df = pd.read_csv(self.input_path)
 
         print("=" * 60)
-        print("Starting Data Preprocessing...")
+        print("Starting Data Preprocessing..")
         print("=" * 60)
 
         # Drop unnecessary columns
