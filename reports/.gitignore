@@ -1,1 +1,5 @@
 /metrics.json
+/actual_vs_predicted.png
+/feature_importance.png
+/residual_distribution.png
+/residual_plot.png
