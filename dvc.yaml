@@ -12,10 +12,27 @@ stages:
     - data\processed\processed_data.csv
     - src\feature_engineering.py
     outs:
-    - data\features\X_test.csv
-    - data\features\X_train.csv
-    - data\features\y_test.csv
-    - data\features\y_train.csv
+    - data/features/X_train.csv
+    - data/features/X_test.csv
+    - data/features/y_train.csv
+    - data/features/y_test.csv
+
+  # feast_apply:
+  #   cmd: feast -c feature_repo\feature_repo apply
+  #   deps:
+  #   - feature_repo\feature_repo\feature_definitions.py
+  #   - feature_repo\feature_repo\feature_store.yaml
+  #   - feature_repo\data\features.parquet
+  # get_features:
+  #   cmd: python src\get_features.py
+  #   deps:
+  #   - src\get_features.py
+  #   - feature_repo\data\features.parquet
+  #   outs:
+  #   - data\features\X_test.csv
+  #   - data\features\X_train.csv
+  #   - data\features\y_test.csv
+  #   - data\features\y_train.csv
   train:
     cmd: python src\train.py
     deps:
