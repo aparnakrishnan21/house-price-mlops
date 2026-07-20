@@ -1,5 +1,6 @@
 pandas
 numpy
+scipy
 scikit-learn
 matplotlib
 seaborn
@@ -12,13 +13,13 @@ mlflow
 
 dvc
 
-pytest
+feast
 
 python-dotenv
 PyYAML
 
-jupyter
-notebook
+pyarrow
+
+pytest
 
 xgboost
-feast
