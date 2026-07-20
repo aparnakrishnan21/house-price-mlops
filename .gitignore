@@ -5,3 +5,7 @@ mlruns/
 models/*.pkl
 /models
 mlflow.db
+/reports
+.vscode/
+reports/
+*.db
