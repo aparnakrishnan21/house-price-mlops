@@ -3,10 +3,10 @@ name: House Price CI
 on:
   push:
     branches:
-      - main
+      - aparnakrishnan
   pull_request:
     branches:
-      - main
+      - aparnakrishnan
 
 jobs:
   test:
