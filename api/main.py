@@ -66,7 +66,10 @@ app = FastAPI(
     version="1.0"
 )
 
-model = joblib.load("models/best_model.pkl")
+model = None
+
+if os.path.exists("models/best_model.pkl"):
+    model = joblib.load("models/best_model.pkl")
 # Load Feast Feature Store
 store = FeatureStore(repo_path="feature_repo/feature_repo")
 
@@ -96,6 +99,11 @@ def health():
 @app.post("/predict/{property_id}")
 def predict(property_id: int):
     #REQUEST_COUNT.inc()
+    if model is None:
+        raise HTTPException(
+            status_code=500,
+            detail="Model not available"
+    )
     # Fetch features from Feast
     feature_vector = store.get_online_features(
         features=[
