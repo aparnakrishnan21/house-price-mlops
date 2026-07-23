@@ -2,8 +2,8 @@ venv/
 __pycache__/
 *.pyc
 mlruns/
-models/*.pkl
-/models
+# models/*.pkl
+# /models
 mlflow.db
 /reports
 .vscode/
