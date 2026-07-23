@@ -32,7 +32,7 @@ class ModelTrainer:
             "Linear Regression": LinearRegression(),
 
             "Random Forest": RandomForestRegressor(
-                n_estimators=100,
+                n_estimators=90,
                 random_state=42,
                 n_jobs=-1
             )
@@ -67,7 +67,7 @@ class ModelTrainer:
                 mlflow.log_param("Model", name)
 
                 if name == "Random Forest":
-                    mlflow.log_param("n_estimators", 100)
+                    mlflow.log_param("n_estimators", 90)
                     mlflow.log_param("random_state", 42)
                     mlflow.log_param("n_jobs", -1)
 
@@ -107,7 +107,7 @@ class ModelTrainer:
 
         joblib.dump(
             best_model,
-            f"{self.model_path}/best_model.pkl"
+            f"{self.model_path}/best_model.pkl",compress=9
         )
 
         print("\n" + "=" * 60)
